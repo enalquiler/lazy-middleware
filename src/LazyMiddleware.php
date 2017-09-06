@@ -10,7 +10,14 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class LazyMiddleware implements MiddlewareInterface
 {
+    /**
+     * @var callable
+     */
     private $factory;
+
+    /**
+     * @var MiddlewareInterface
+     */
     private $app;
 
     public function __construct(callable $factory)
@@ -22,7 +29,7 @@ class LazyMiddleware implements MiddlewareInterface
      * Process an incoming client or server request and return a response,
      * optionally delegating to the next middleware component to create the response.
      *
-     * @param RequestInterface $request
+     * @param ServerRequestInterface $request
      * @param DelegateInterface $delegate
      *
      * @return ResponseInterface

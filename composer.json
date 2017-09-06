@@ -1,9 +1,9 @@
 {
     "name": "enalquiler/lazy-middleware",
-    "license": "proprietary",
+    "license": "MIT",
     "type": "library",
-    "description": "Enalquiler PHP 7.0 Lazy Middleware",
-    "keywords": ["enalquiler Rental Online"],
+    "description": "Enalquiler PSR-15 Lazy Middleware",
+    "keywords": ["lazy", "middleware", "psr", "psr-15", "psr15", "psr7", "psr-7"],
     "authors": [
         {
             "name": "Enalquiler Team",
@@ -12,22 +12,26 @@
     ],
     "support": {
         "email": "tecnicos@enalquiler.com",
-        "source": "https://github.com/enalquiler/middleware"
+        "source": "https://github.com/enalquiler/middleware",
+        "issues": "https://github.com/enalquiler/middleware/issues"
     },
     "autoload": {
-        "psr-0": {
-            "Enalquiler\\LazyMiddleware": "."
+        "psr-4": {
+            "Enalquiler\\Middleware\\": "src"
         },
-        "files": ["functions.php"]
+        "files": ["src/functions.php"]
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "test"
+            "Tests\\Enalquiler\\Middleware\\": "tests"
         }
     },
     "require": {
-        "php": ">=7.0",
         "http-interop/http-factory": "^0.3.0",
         "http-interop/http-middleware": "^0.4.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3",
+        "guzzlehttp/psr7": "^1.4"
     }
 }

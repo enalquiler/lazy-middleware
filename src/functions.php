@@ -1,6 +1,6 @@
 <?php
 
-namespace Enalquiler\MiddleWare;
+namespace Enalquiler\Middleware;
 
 function lazy(callable $factory)
 {

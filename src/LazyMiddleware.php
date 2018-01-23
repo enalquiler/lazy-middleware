@@ -2,11 +2,10 @@
 
 namespace Enalquiler\Middleware;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class LazyMiddleware implements MiddlewareInterface
 {
@@ -26,17 +25,12 @@ class LazyMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Process an incoming client or server request and return a response,
-     * optionally delegating to the next middleware component to create the response.
-     *
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     *
-     * @return ResponseInterface
+     * Process an incoming server request and return a response, optionally delegating
+     * response creation to a handler.
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return $this->createApp()->process($request, $delegate);
+        return $this->createApp()->process($request, $handler);
     }
 
     /**

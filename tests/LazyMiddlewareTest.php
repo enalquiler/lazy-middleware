@@ -6,11 +6,12 @@ namespace Enalquiler\Middleware;
 
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use PHPUnit\Framework\TestCase;
 use function GuzzleHttp\Psr7\stream_for;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 final class LazyMiddlewareTest extends TestCase
 {
@@ -19,7 +20,7 @@ final class LazyMiddlewareTest extends TestCase
     {
         $lazyMiddleware = lazy(function() {
             return new class implements MiddlewareInterface {
-                public function process(ServerRequestInterface $request, DelegateInterface $delegate) {
+                public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
                     return (new Response())->withBody(stream_for('Response!'));
                 }
             };
@@ -29,8 +30,8 @@ final class LazyMiddlewareTest extends TestCase
         
         $response = $lazyMiddleware->process(
             new ServerRequest('GET', '/'),
-            new class implements DelegateInterface {
-                public function process(ServerRequestInterface $request) {
+            new class implements RequestHandlerInterface {
+                public function handle(ServerRequestInterface $request): ResponseInterface {
                     return new Response();
                 }
             }
